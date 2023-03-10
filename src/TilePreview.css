@@ -1,0 +1,10 @@
+.TilePreview {
+  display: grid;
+  grid-template:
+    ". north ."
+    "west tile east"
+    ". south .";
+
+  width: 256px;
+  height: 256px;
+}
