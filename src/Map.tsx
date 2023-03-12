@@ -12,7 +12,7 @@ export function Map() {
   const height = 32;
 
   const [possibleTiles, setPossibleTiles] = useState(newGrid(width, height));
-  const [solving, setSolving] = useState<number | null>(300)
+  const [solving, setSolving] = useState<number | null>(100)
 
   const [scale, setScale] = useState(1.5);
 

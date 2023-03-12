@@ -2,6 +2,10 @@ import { ReactNode } from "react";
 import { EdgeBottom } from "../tiles/EdgeBottom";
 import { EdgeBottomLeft } from "../tiles/EdgeBottomLeft";
 import { EdgeBottomRight } from "../tiles/EdgeBottomRight";
+import { EdgeInnerBottomLeft } from "../tiles/EdgeInnerBottomLeft";
+import { EdgeInnerBottomRight } from "../tiles/EdgeInnerBottomRight";
+import { EdgeInnerTopLeft } from "../tiles/EdgeInnerTopLeft";
+import { EdgeInnerTopRight } from "../tiles/EdgeInnerTopRight";
 import { EdgeLeft } from "../tiles/EdgeLeft";
 import { EdgeRight } from "../tiles/EdgeRight";
 import { EdgeTop } from "../tiles/EdgeTop";
@@ -23,6 +27,10 @@ export enum Element {
   EDGE_BOTTOM_LEFT,
   EDGE_BOTTOM_CENTER,
   EDGE_BOTTOM_RIGHT,
+  EDGE_INNER_TOP_LEFT,
+  EDGE_INNER_TOP_RIGHT,
+  EDGE_INNER_BOTTOM_LEFT,
+  EDGE_INNER_BOTTOM_RIGHT,
 }
 
 export const AllElements: Element[] =
@@ -37,6 +45,10 @@ export const AllElements: Element[] =
     Element.EDGE_BOTTOM_LEFT,
     Element.EDGE_BOTTOM_CENTER,
     Element.EDGE_BOTTOM_RIGHT,
+    Element.EDGE_INNER_TOP_LEFT,
+    Element.EDGE_INNER_TOP_RIGHT,
+    Element.EDGE_INNER_BOTTOM_LEFT,
+    Element.EDGE_INNER_BOTTOM_RIGHT,
 ]
 
 type ElementList = { [key in Element]?: Tile };
@@ -215,6 +227,66 @@ const elements: ElementList = {
       east: [],
       west: [],
     },
+  },
+  [Element.EDGE_INNER_TOP_LEFT]: {
+    element: EdgeInnerTopLeft,
+    edgeDefinitions: {
+      north: '0_e_g',
+      east: 'g_g_g',
+      south: 'g_g_g',
+      west: '0_e_g',
+    },
+    possibleConnections: {
+      north: [],
+      south: [],
+      east: [],
+      west: [],
+    }
+  },
+  [Element.EDGE_INNER_TOP_RIGHT]: {
+    element: EdgeInnerTopRight,
+    edgeDefinitions: {
+      north: 'g_e_0',
+      east: '0_e_g',
+      south: 'g_g_g',
+      west: 'g_g_g',
+    },
+    possibleConnections: {
+      north: [],
+      south: [],
+      east: [],
+      west: [],
+    }
+  },
+  [Element.EDGE_INNER_BOTTOM_LEFT]: {
+    element: EdgeInnerBottomLeft,
+    edgeDefinitions: {
+      north: 'g_g_g',
+      east: 'g_g_g',
+      south: '0_e_g',
+      west: 'g_e_0',
+    },
+    possibleConnections: {
+      north: [],
+      south: [],
+      east: [],
+      west: [],
+    }
+  },
+  [Element.EDGE_INNER_BOTTOM_RIGHT]: {
+    element: EdgeInnerBottomRight,
+    edgeDefinitions: {
+      north: 'g_g_g',
+      east: 'g_e_0',
+      south: 'g_e_0',
+      west: 'g_g_g',
+    },
+    possibleConnections: {
+      north: [],
+      south: [],
+      east: [],
+      west: [],
+    }
   },
 };
 
