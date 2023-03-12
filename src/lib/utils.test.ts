@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, expectTypeOf, it, vi } from "vitest";
 import { AllElements, Direction, Element } from "./tiles";
-import { chooseRandomElementFromPossibilities, getNewPossibilities, getNextCoordinate, getOppositeDirection, getSmallestEntropy } from "./utils";
+import { chooseRandomElementFromPossibilities, getNextCoordinate, getOppositeDirection, getSmallestEntropy } from "./utils";
 
 describe(`getOppositeDirection()`, () => {
   it.each([
@@ -47,19 +47,6 @@ describe('getSmallestEntropy()', () => {
         [Element.NOTHING,Element.GRASS],
       ]
     ])).toEqual([[1, 0], [2, 0], [0, 1], [3, 1]])
-  })
-})
-
-describe(`getNewPossibilities()`, () => {
-  it('returns grass and top center edge for grass tile going north', async () => {
-    expect(getNewPossibilities([...AllElements], [Element.GRASS], 'north')).toStrictEqual(expect.arrayContaining([Element.GRASS, Element.EDGE_TOP_CENTER]))
-  })
-  it('returns grass, right edge, top center and top right for grass tile and right edge going north', async () => {
-    expect(getNewPossibilities([...AllElements], [Element.GRASS, Element.EDGE_RIGHT], 'north')).toStrictEqual(expect.arrayContaining([Element.GRASS, Element.EDGE_TOP_CENTER, Element.EDGE_TOP_RIGHT, Element.EDGE_RIGHT]))
-  })
-
-  it('returns grass, right edge, bottom center and bottom right for grass tile and right edge going south', async () => {
-    expect(getNewPossibilities([...AllElements], [Element.GRASS, Element.EDGE_RIGHT], 'south')).toStrictEqual(expect.arrayContaining([Element.GRASS, Element.EDGE_BOTTOM_CENTER, Element.EDGE_BOTTOM_RIGHT, Element.EDGE_RIGHT]))
   })
 })
 

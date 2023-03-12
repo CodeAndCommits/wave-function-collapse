@@ -8,6 +8,9 @@ function App() {
 
   return (
     <div className="App">
+      <h1>
+        Wave Function Collapse
+      </h1>
       <ErrorBoundary FallbackComponent={function ({error, resetErrorBoundary}) {
         return <div>{error.message}</div>
       }}>

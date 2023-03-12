@@ -36,10 +36,6 @@ export function propagate(
   grid: PossibleElementGrid,
   [x, y]: Coordinates
 ): PossibleElementGrid {
-  if (!grid[y] || !grid[y][x]) {
-    return grid;
-  }
-
   let currentTiles = [...grid[y][x]];
 
   CardinalDirections.forEach((direction) => {

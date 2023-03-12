@@ -44,24 +44,6 @@ export function getSmallestEntropy(grid: PossibleElementGrid): Coordinates[] {
   return lowestCoords;
 }
 
-export function getNewPossibilities(possibilities: Element[], currentTiles: Element[], direction: Direction): Element[] {
-  const newPossibilities: Element[] = []
-
-  currentTiles.forEach((tile) => {
-      possibilities.forEach((possibility) => {
-        if (resolvedElements[tile]?.possibleConnections[direction].includes(possibility)) {
-          newPossibilities.push(possibility)
-        }
-      })
-    });
-
-    if (newPossibilities.length === 0) {
-      throw Error(`Possibilities should never reach 0. ${currentTiles.join(',')} -> ${possibilities.join(',')}`)
-    }
-
-    return newPossibilities;
-}
-
 export function getNextCoordinate([x, y]: Coordinates, direction: Direction): Coordinates {
   switch (direction) {
     case "north":
