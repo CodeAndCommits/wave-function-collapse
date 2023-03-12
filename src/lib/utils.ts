@@ -22,17 +22,20 @@ export function getSmallestEntropy(grid: PossibleElementGrid): Coordinates[] {
 
   grid.forEach((row, y) => {
     row.forEach((cell, x) => {
-      if (cell.length <= 1) {
+
+      const size = new Set(cell).size
+
+      if (size <= 1) {
         return;
       }
 
-      if (cell.length === lowestAmount) {
+      if (size === lowestAmount) {
         lowestCoords.push([x, y]);
         return
       }
 
-      if (cell.length < lowestAmount) {
-        lowestAmount = cell.length;
+      if (size < lowestAmount) {
+        lowestAmount = size;
         lowestCoords = [[x, y]];
       }
     });

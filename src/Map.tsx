@@ -39,7 +39,7 @@ export function Map() {
 
     possibleTiles.forEach((row, y) => {
       row.forEach((possibleElements, x) => {
-        if (possibleElements.length !== 1) {
+        if (new Set(possibleElements).size !== 1) {
           grid.push(
             <g key={`${x},${y}`}>
               {(resolvedElements[Element.NOTHING] as Tile).element({
