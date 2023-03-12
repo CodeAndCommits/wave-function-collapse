@@ -1,11 +1,10 @@
 import { resolvedElements, Tile } from "./lib/tiles";
 import { Svg } from "./Svg";
-import './TilePreview.css'
+import "./TilePreview.css";
 
 export function TilePreview({ element }: { element: Tile }) {
   return (
-    <div className="TilePreview"
-    >
+    <div className="TilePreview">
       <div
         style={{
           gridArea: "north",
@@ -26,7 +25,7 @@ export function TilePreview({ element }: { element: Tile }) {
 
       <div
         style={{
-            gridArea: 'west',
+          gridArea: "west",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -44,7 +43,7 @@ export function TilePreview({ element }: { element: Tile }) {
       </div>
       <div
         style={{
-            gridArea: 'tile',
+          gridArea: "tile",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -52,13 +51,13 @@ export function TilePreview({ element }: { element: Tile }) {
       >
         <div style={{ border: "1px solid white" }}>
           <Svg width={64} height={64}>
-            {element.element({ x: 0, y: 0, scale: 4 })}{" "}
+            {element.element({ x: 0, y: 0, scale: 4 })}
           </Svg>
         </div>
       </div>
       <div
         style={{
-            gridArea: 'east',
+          gridArea: "east",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -77,7 +76,7 @@ export function TilePreview({ element }: { element: Tile }) {
 
       <div
         style={{
-          gridArea:'south',
+          gridArea: "south",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

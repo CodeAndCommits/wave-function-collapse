@@ -58,3 +58,20 @@ export function getNewPossibilities(possibilities: Element[], currentTiles: Elem
 
     return newPossibilities;
 }
+
+export function getNextCoordinate([x, y]: Coordinates, direction: Direction): Coordinates {
+  switch (direction) {
+    case "north":
+      return [x, y - 1];
+    case "east":
+      return [x + 1, y];
+    case "south":
+      return [x, y + 1];
+    case "west":
+      return [x - 1, y];
+  }
+}
+
+export function chooseRandomElementFromPossibilities(possibilities: Element[]) {
+  return possibilities[Math.floor(Math.random() * possibilities.length)]
+}

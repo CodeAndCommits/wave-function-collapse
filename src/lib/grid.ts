@@ -1,112 +1,102 @@
-import { Element, Tile, resolvedElements, Direction, AllElements } from "./tiles";
-import { Coordinates, getNewPossibilities, getSmallestEntropy } from "./utils";
+import {
+  Element,
+  Tile,
+  resolvedElements,
+  Direction,
+  AllElements,
+} from "./tiles";
+import {
+  chooseRandomElementFromPossibilities,
+  Coordinates,
+  getNextCoordinate,
+  getSmallestEntropy,
+} from "./utils";
 
 export type PossibleElementGrid = Element[][][];
 
 export type TileGrid = Tile[][];
 
+const CardinalDirections: Direction[] = ["north", "east", "south", "west"];
+
 export function newGrid(x: number, y: number): PossibleElementGrid {
-  return new Array(y).fill(
-    new Array(x).fill([...AllElements])
-  );
-}
+  const grid = [];
 
-
-
-
-
-function propagate(
-  grid: PossibleElementGrid,
-  [x, y]: Coordinates,
-  currentTiles: Element[],
-  checked: string[] = []
-): PossibleElementGrid {
-  checked.push(`${x},${y}`);
-
-  // Propagate into each cardinal direction
-  (["north", "south", "east", "west"] as Direction[]).forEach(
-    (direction: Direction) => {
-      let coords: Coordinates;
-      switch (direction) {
-        case "north":
-          coords = [x, y - 1];
-          break;
-        case "east":
-          coords = [x + 1, y];
-          break;
-        case "south":
-          coords = [x, y + 1];
-          break;
-        case "west":
-          coords = [x - 1, y];
-          break;
-      }
-
-      const [nextX, nextY] = coords;
-      console.log(`Checking ${direction} ${nextX}, ${nextY}`)
-
-      // If already propagated to, skip
-      if (checked.includes(`${nextX},${nextY}`)) {
-        console.debug(`Already Checked ${nextX},${nextY}`)
-        return;
-      }
-
-      // If no row / cell found, continue on
-      if (!grid[nextY] || !grid[nextY][nextX]) {
-        console.log(`Cell ${nextX},${nextY} Not found`)
-        return;
-      }
-
-      const possibilities = grid[nextY][nextX];
-
-      // Filter adjacent tiles possibilities based on current tiles possible connections
-
-      const newPossibilities = getNewPossibilities(possibilities, currentTiles, direction);
-
-      // If next and current are the same, no change. End propagation in this direction.
-      if (newPossibilities == possibilities) {
-        console.debug(`Both possibility lists are the same. No need to propagate further.`)
-        return;
-      }
-
-      // Update grid possibilities
-      grid[nextY][nextX] = newPossibilities;
-
-      console.log(`Updated Possibilities for ${nextX},${nextY}`, newPossibilities)
-      grid = propagate(grid, [nextX, nextY], newPossibilities, checked);
+  for (let yi = 0; yi < y; yi++) {
+    const row = [];
+    for (let xi = 0; xi < x; xi++) {
+      row.push([...AllElements]);
     }
-  );
-
-  console.debug(`Finished Propgating for ${x}, ${y}`)
-
-    console.log(grid)
+    grid.push(row);
+  }
 
   return grid;
 }
 
-export function solve(grid: PossibleElementGrid): PossibleElementGrid {
+export function propagate(
+  grid: PossibleElementGrid,
+  [x, y]: Coordinates
+): PossibleElementGrid {
+  if (!grid[y] || !grid[y][x]) {
+    return grid;
+  }
+
+  let currentTiles = [...grid[y][x]];
+
+  CardinalDirections.forEach((direction) => {
+    const [nextX, nextY] = getNextCoordinate([x, y], direction);
+
+    // If no row / cell found, continue on
+    if (!grid[nextY] || !grid[nextY][nextX]) {
+      return;
+    }
+
+    let otherTiles = [...grid[nextY][nextX]];
+
+    let changes = false;
+    otherTiles = otherTiles.filter((otherTile) => {
+      const found = currentTiles.some((currentTile) => {
+        const possibleConnections =
+          resolvedElements[currentTile]?.possibleConnections[direction];
+        const found = possibleConnections?.includes(otherTile);
+
+        return found;
+      });
+
+      if (!found) {
+        changes = true;
+        return false;
+      }
+
+      return true;
+    });
+
+    if (changes) {
+      grid[nextY][nextX] = otherTiles;
+      grid = propagate(grid, [nextX, nextY]);
+    }
+  });
+
+  grid[y][x] = [...currentTiles];
+
+  return grid;
+}
+
+export function solve(grid: PossibleElementGrid): PossibleElementGrid | false {
   const locations = getSmallestEntropy(grid);
 
-  console.log(`Found ${locations.length} with small entropy`)
-
   if (locations.length === 0) {
-    console.log("No more locations found.");
-    return grid;
+    return false;
   }
 
   const target = Math.floor(Math.random() * locations.length);
   const [x, y] = locations[target];
 
-  console.log(`Processing ${x}, ${y}`);
-
   const location = grid[y][x];
-  const tile = location[Math.floor(Math.random() * location.length)];
+  const tile = chooseRandomElementFromPossibilities(location);
 
-  grid[y][x] = [tile]
+  grid[y][x] = [tile];
 
-  const newGrid = propagate(grid, [x, y], [tile]);
+  const newGrid = propagate(grid, [x, y]);
 
-  console.log(`Done Propagating for ${x}, ${y}`);
-
-  return newGrid
+  return newGrid;
 }
