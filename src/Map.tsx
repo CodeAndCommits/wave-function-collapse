@@ -75,6 +75,8 @@ export function Map() {
           {grid}
         </Svg>
       </div>
+
+      <span style={{ color: '#c1d475' }}>{solving === null ? 'Done' : null}</span>
     </div>
   );
 }
