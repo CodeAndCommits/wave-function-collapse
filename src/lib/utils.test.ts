@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, expectTypeOf, it, vi } from "vitest";
-import { AllElements, Direction, Element } from "./tiles";
+import { Direction, Element } from "./tiles";
 import { chooseRandomElementFromPossibilities, getNextCoordinate, getOppositeDirection, getSmallestEntropy } from "./utils";
 
 describe(`getOppositeDirection()`, () => {
@@ -9,7 +9,7 @@ describe(`getOppositeDirection()`, () => {
     { input: "south", expected: "north" },
     { input: "west", expected: "east" },
   ])("getOppositeDirection(%s) -> %s", async ({ input, expected }) => {
-    expectTypeOf(input).toMatchTypeOf<Direction>;
+    expectTypeOf(input as Direction).toMatchTypeOf<Direction>;
     expect(getOppositeDirection(input as Direction)).toBe(expected);
   });
 });
