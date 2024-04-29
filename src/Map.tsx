@@ -1,8 +1,8 @@
 import { ReactNode, useMemo, useState } from "react";
 import { useInterval } from "usehooks-ts";
-import { newGrid, solve } from "./lib/grid";
-import { Element, resolvedElements, Tile } from "./lib/tiles";
 import { Svg } from "./Svg";
+import { newGrid, solve } from "./lib/grid";
+import { Element, Tile, resolvedElements } from "./lib/tiles";
 import { Water } from "./tiles/Water";
 
 export function Map() {
@@ -12,7 +12,7 @@ export function Map() {
   const height = 32;
 
   const [possibleTiles, setPossibleTiles] = useState(newGrid(width, height));
-  const [solving, setSolving] = useState<number | null>(100)
+  const [solving, setSolving] = useState<number | null>(0)
 
   const [scale, setScale] = useState(1.5);
 

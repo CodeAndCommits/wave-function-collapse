@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useInterval } from "usehooks-ts";
 import waterTile0 from "../assets/tilesets/water_tiles_0.png";
-import waterTile1 from "../assets/tilesets/water_tiles_1.png";
-import waterTile2 from "../assets/tilesets/water_tiles_1.png";
-import waterTile3 from "../assets/tilesets/water_tiles_1.png";
+import { default as waterTile1, default as waterTile2, default as waterTile3 } from "../assets/tilesets/water_tiles_1.png";
 import { SimpleTile } from "./SimpleTile";
-import { Tile, TileProps } from "./Tile";
+import { TileProps } from "./Tile";
 
 export function Water(props: TileProps) {
   const [tile, setTile] = useState(Math.floor(Math.random() * 4));

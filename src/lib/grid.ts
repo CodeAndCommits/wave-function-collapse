@@ -34,7 +34,7 @@ export function newGrid(x: number, y: number): PossibleElementGrid {
 
 export function propagate(
   grid: PossibleElementGrid,
-  [x, y]: Coordinates
+  [x, y]: Coordinates,
 ): PossibleElementGrid {
   let currentTiles = [...grid[y][x]];
 
