@@ -8,9 +8,9 @@ describe(`getOppositeDirection()`, () => {
     { input: "east", expected: "west" },
     { input: "south", expected: "north" },
     { input: "west", expected: "east" },
-  ])("getOppositeDirection(%s) -> %s", async ({ input, expected }) => {
-    expectTypeOf(input as Direction).toMatchTypeOf<Direction>;
-    expect(getOppositeDirection(input as Direction)).toBe(expected);
+  ] as const)("getOppositeDirection(%s) -> %s", async ({ input, expected }) => {
+    expectTypeOf(input).toMatchTypeOf<Direction>;
+    expect(getOppositeDirection(input)).toBe(expected);
   });
 });
 
